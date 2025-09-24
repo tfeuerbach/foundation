@@ -1,0 +1,15 @@
+# Logo Placeholder
+
+This file should be replaced with your company logo.
+
+## Requirements:
+- Format: PNG
+- Recommended size: 200x200px or similar
+- Transparent background preferred
+- High resolution for crisp display
+
+## Usage:
+This logo is used in the frontend application and referenced in the HTML templates.
+
+## Note:
+This file is gitignored to prevent personal assets from being included in the public repository.

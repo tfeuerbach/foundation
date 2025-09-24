@@ -1,0 +1,21 @@
+# Docker
+.dockerignore
+
+# Environment variables
+.env
+
+# Dependencies
+node_modules/
+vendor/
+
+# Operating system artifacts
+.DS_Store
+Thumbs.db
+
+*.code-workspace
+*.txt
+
+# Personal assets for production deployment
+frontend/src/assets/*.png
+frontend/src/assets/logo.png
+frontend/src/assets/shopifypage.png

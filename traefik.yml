@@ -1,0 +1,20 @@
+# traefik.yml
+# Main Traefik configuration file
+
+# API and Dashboard
+api:
+  dashboard: true
+  insecure: true # Enable insecure dashboard for local development ONLY
+
+# Entrypoints configuration
+entryPoints:
+  web:
+    address: ":80"
+  websecure:
+    address: ":443"
+
+# Docker provider configuration
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false

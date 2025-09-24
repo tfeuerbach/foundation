@@ -1,0 +1,179 @@
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: #000000;
+    
+    /* Cream Gradient */
+    background: linear-gradient(-45deg, #e2e2e2, #f9f9f9, #d1d1d1, #fcfcfc);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+
+    overflow-x: hidden;
+}
+
+#starfield-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.fullscreen-section {
+    height: 100vh;
+}
+
+.company-name {
+    animation: fadeIn 1.5s ease-out forwards;
+    font-size: calc(3rem + 4vw);
+    text-shadow: 0px 4px 15px rgba(0, 0, 0, 0.15);
+}
+
+.contact-button {
+    border-radius: 2rem;
+    padding: 0.75rem 2rem;
+    font-weight: 600;
+    transition: all 0.2s ease-in-out;
+    opacity: 0;
+    animation: fadeIn 1.5s ease-out 0.5s forwards;
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+    background-color: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #000;
+}
+
+.contact-button:hover {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.2);
+}
+
+.scroll-down-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    color: #000;
+    animation: bounce 2s infinite ease-in-out;
+    cursor: pointer;
+    transition: opacity 0.5s ease-out;
+}
+
+.scroll-down-indicator.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.scroll-down-indicator span {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+        transform: translateX(-50%) translateY(0);
+    }
+    40% {
+        transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+        transform: translateX(-50%) translateY(-5px);
+    }
+}
+
+.dashboard-link-container {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 200px; /* Widened to prevent text wrapping */
+    height: 100px;
+    z-index: 100;
+}
+
+.dashboard-link {
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    color: #000;
+    font-weight: 600;
+    text-decoration: none;
+    pointer-events: none;
+    white-space: nowrap; /* Ensures text stays on a single line */
+}
+
+.dashboard-link-container:hover .dashboard-link {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Styles for the scroll-in animation */
+.fade-in-section .brand-card {
+    /* Define all transitions on the card itself */
+    transition: opacity 0.8s ease-out,
+                transform 0.8s ease-out,
+                background-color 0.8s ease-out,
+                backdrop-filter 0.8s ease-out;
+}
+
+.fade-in-section.fade-in-start .brand-card {
+    /* The initial, invisible state */
+    opacity: 0;
+    transform: translateY(20px);
+    background-color: rgba(255, 255, 255, 0.0); /* Start fully transparent */
+    backdrop-filter: blur(0px); /* Start with no blur */
+}
+
+.fade-in-section.fade-in-end .brand-card {
+    /* The final, visible state */
+    opacity: 1;
+    transform: translateY(0);
+    background-color: rgba(255, 255, 255, 0.1); /* End semi-transparent */
+    backdrop-filter: blur(10px); /* End with blur */
+}
+
+.brand-card {
+    /* Base styles (state is now controlled by parent classes) */
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    color: #000;
+    max-width: 600px;
+    margin: 0 auto;
+    box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.1);
+}
+
+.storefront-preview {
+    border-radius: 1rem; /* Rounded corners for the image */
+    margin-bottom: 1.5rem; /* Space between image and text */
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+}
+
+@keyframes gradient {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}

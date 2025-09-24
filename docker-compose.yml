@@ -1,0 +1,185 @@
+# This is a reusable block of common configuration for both frontend services.
+x-frontend-common: &frontend-common
+  build:
+    context: ./frontend
+  env_file:
+    - .env
+  networks:
+    - web
+
+# This is a reusable block of common configuration for both authentik server services.
+x-authentik-server-common: &authentik-server-common
+  image: ${AUTHENTIK_IMAGE:-goauthentik/server}:${AUTHENTIK_TAG:-2025.8.3}
+  restart: unless-stopped
+  networks:
+    - web
+  env_file:
+    - .env
+  volumes:
+    - ./media:/media
+    - ./custom-templates/authentik.css:/web/dist/authentik.css
+  depends_on:
+    postgresql:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+  environment:
+    AUTHENTIK_POSTGRESQL__HOST: postgresql
+    AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+    AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+    AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+    AUTHENTIK_REDIS__HOST: redis
+    AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+
+services:
+  traefik:
+    image: traefik:v2.10
+    container_name: traefik
+    environment:
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.web.address=:80"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.letsencrypt.acme.email=${LETSENCRYPT_EMAIL}"
+      - "--certificatesresolvers.letsencrypt.acme.storage=/letsencrypt/acme.json"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge=true"
+      - "--certificatesresolvers.letsencrypt.acme.httpchallenge.entrypoint=web"
+    ports:
+      - "8000:80"
+      - "8443:443"
+      - "8080:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "traefik-certs:/letsencrypt"
+    networks:
+      - web
+    env_file:
+      - .env
+
+  frontend-dev:
+    <<: *frontend-common
+    container_name: frontend-dev
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend.rule=Host(`localhost`)"
+      - "traefik.http.routers.frontend.entrypoints=web"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+
+  frontend-prod:
+    <<: *frontend-common
+    container_name: frontend-prod
+    profiles:
+      - prod
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.frontend-http.rule=Host(`${DOMAIN_NAME}`)"
+      - "traefik.http.routers.frontend-http.entrypoints=web"
+      - "traefik.http.routers.frontend-http.middlewares=https-redirect"
+      - "traefik.http.routers.frontend-https.rule=Host(`${DOMAIN_NAME}`)"
+      - "traefik.http.routers.frontend-https.entrypoints=websecure"
+      - "traefik.http.routers.frontend-https.tls=true"
+      - "traefik.http.routers.frontend-https.tls.certresolver=letsencrypt"
+      - "traefik.http.services.frontend.loadbalancer.server.port=80"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.https-redirect.redirectscheme.permanent=true"
+
+  postgresql:
+    image: docker.io/library/postgres:16-alpine
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    networks:
+      - web
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${PG_DB:-authentik}
+      POSTGRES_PASSWORD: ${PG_PASS}
+      POSTGRES_USER: ${PG_USER:-authentik}
+
+  redis:
+    image: docker.io/library/redis:alpine
+    command: --save 60 1 --loglevel warning
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "redis-cli ping | grep PONG"]
+      interval: 30s
+      timeout: 3s
+      retries: 5
+      start_period: 20s
+    networks:
+      - web
+    volumes:
+      - redis-data:/data
+
+  authentik-server-dev:
+    <<: *authentik-server-common
+    container_name: authentik-server-dev
+    command: server
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.authentik.rule=Host(`auth.localhost`)"
+      - "traefik.http.routers.authentik.entrypoints=web"
+      - "traefik.http.services.authentik.loadbalancer.server.port=9000"
+
+  authentik-server-prod:
+    <<: *authentik-server-common
+    container_name: authentik-server-prod
+    command: server
+    profiles:
+      - prod
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.authentik-http.rule=Host(`auth.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.authentik-http.entrypoints=web"
+      - "traefik.http.routers.authentik-http.middlewares=https-redirect"
+      - "traefik.http.routers.authentik-https.rule=Host(`auth.${DOMAIN_NAME}`)"
+      - "traefik.http.routers.authentik-https.entrypoints=websecure"
+      - "traefik.http.routers.authentik-https.tls=true"
+      - "traefik.http.routers.authentik-https.tls.certresolver=letsencrypt"
+      - "traefik.http.services.authentik.loadbalancer.server.port=9000"
+
+  authentik-worker:
+    image: ${AUTHENTIK_IMAGE:-goauthentik/server}:${AUTHENTIK_TAG:-2025.8.3}
+    restart: unless-stopped
+    command: worker
+    networks:
+      - web
+    env_file:
+      - .env
+    user: root
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./media:/media
+      - ./certs:/certs
+      - ./custom-templates:/templates
+    depends_on:
+      postgresql:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    environment:
+      AUTHENTIK_POSTGRESQL__HOST: postgresql
+      AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
+      AUTHENTIK_POSTGRESQL__PASSWORD: ${PG_PASS}
+      AUTHENTIK_POSTGRESQL__USER: ${PG_USER:-authentik}
+      AUTHENTIK_REDIS__HOST: redis
+      AUTHENTIK_SECRET_KEY: ${AUTHENTIK_SECRET_KEY}
+
+volumes:
+  traefik-certs:
+  postgres-data:
+  redis-data:
+
+networks:
+  web:
+    name: ${COMPOSE_PROJECT_NAME}-network

@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${PUBLIC_COMPANY_NAME}</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-link-container">
+        <a href="http://auth.localhost:8000" class="dashboard-link">Team Dashboard</a>
+    </div>
+
+    <canvas id="starfield-canvas"></canvas>
+
+    <main>
+        <!-- Section 1: Initial View (Above the Fold) -->
+        <section class="fullscreen-section d-flex justify-content-center align-items-center text-center">
+            <div>
+                <h1 class="display-1 fw-bold company-name">${PUBLIC_COMPANY_NAME}</h1>
+                <a href="mailto:youremail@example.com" class="btn btn-lg contact-button mt-4">Contact Us</a>
+            </div>
+            <div class="scroll-down-indicator">
+                <span>See Our Brands</span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19.5 9L12 16.5L4.5 9" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+        </section>
+
+        <!-- Section 2: Brand View (On Scroll) -->
+        <section class="fullscreen-section d-flex justify-content-center align-items-center text-center">
+            <div class="fade-in-section">
+                <div class="card brand-card">
+                    <img src="assets/shopifypage.png" class="card-img-top storefront-preview" alt="Eat the Empire storefront preview">
+                    <div class="card-body">
+                        <h2 class="card-title display-4 fw-light">${PUBLIC_BRAND_NAME}</h2>
+                        <p class="card-text fs-5 mt-3">
+                            Wear the conversation. Curated apparel and goods offering a satirical take on modern society.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Custom JS -->
+    <script src="icon-list.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

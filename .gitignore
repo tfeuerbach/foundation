@@ -19,3 +19,6 @@ Thumbs.db
 frontend/src/assets/*.png
 frontend/src/assets/logo.png
 frontend/src/assets/shopifypage.png
+
+# Planning Markdowns
+*-integration.md

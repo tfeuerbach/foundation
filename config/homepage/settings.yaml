@@ -1,0 +1,24 @@
+---
+# Homepage Dashboard Settings
+title: Company Dashboard
+favicon: https://gethomepage.dev/img/favicon.ico
+
+# Layout configuration
+layout:
+  Services:
+    style: row
+    columns: 3
+  Information:
+    style: row
+    columns: 2
+
+# Theme
+theme: dark
+color: slate
+
+# Language
+language: en
+
+# Hide errors
+hideErrors: false
+

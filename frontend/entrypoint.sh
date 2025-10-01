@@ -5,7 +5,7 @@ set -e # Exit immediately if a command exits with a non-zero status.
 # Generate the icon list javascript file
 ICON_LIST_FILE="/usr/share/nginx/html/icon-list.js"
 echo "const iconPaths = [" > "$ICON_LIST_FILE"
-for file in /tmp/assets/background/*; do
+for file in /tmp/assets/background/*.svg; do
   # Check if the file is a regular file to avoid including directories
   if [ -f "$file" ]; then
     filename=$(basename "$file")

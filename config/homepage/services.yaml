@@ -1,0 +1,30 @@
+---
+# Services displayed on the Homepage Dashboard
+
+- Services:
+    - Zoho Mail:
+        icon: zoho.png
+        href: https://mail.zoho.com
+        description: Company Email
+        
+    - Zoho CRM:
+        icon: zoho.png
+        href: https://crm.zoho.com
+        description: Customer Relationship Management
+        
+    - Zoho Projects:
+        icon: zoho.png
+        href: https://projects.zoho.com
+        description: Project Management
+
+- Infrastructure:
+    - Authentik:
+        icon: authentik.png
+        href: http://auth.localhost:8000
+        description: Identity & Access Management
+        
+    - Traefik:
+        icon: traefik.png
+        href: http://localhost:8080
+        description: Reverse Proxy Dashboard
+

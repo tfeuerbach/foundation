@@ -1,0 +1,13 @@
+[2025-10-01T05:58:10.234Z] info: kubernetes.yaml was copied to the config folder
+[2025-10-01T06:02:30.104Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2025-10-01T06:02:30.213Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2025-10-01T06:02:30.216Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2025-10-01T06:02:30.219Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2025-10-01T06:02:30.222Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2025-10-01T06:02:30.227Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2025-10-01T06:02:30.231Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2025-10-01T06:02:30.235Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2025-10-01T06:02:30.238Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2025-10-01T06:02:30.240Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2025-10-01T06:02:30.243Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.
+[2025-10-01T06:02:30.251Z] error: Host validation failed for: dashboard.localhost:8000. Hint: Set the HOMEPAGE_ALLOWED_HOSTS environment variable to allow requests from this host / port.

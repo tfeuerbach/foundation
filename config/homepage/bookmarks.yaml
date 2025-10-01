@@ -1,0 +1,19 @@
+---
+# Quick Access Bookmarks
+
+- Development:
+    - Github:
+        - icon: github.png
+          href: https://github.com
+    - Stack Overflow:
+        - icon: stackoverflow.png
+          href: https://stackoverflow.com
+
+- Productivity:
+    - Google Drive:
+        - icon: google-drive.png
+          href: https://drive.google.com
+    - Dropbox:
+        - icon: dropbox.png
+          href: https://dropbox.com
+

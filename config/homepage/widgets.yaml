@@ -1,0 +1,21 @@
+---
+# Dashboard Widgets
+
+- logo:
+    icon: https://gethomepage.dev/img/logo.png
+
+- search:
+    provider: google
+    target: _blank
+
+- datetime:
+    text_size: xl
+    format:
+      dateStyle: long
+      timeStyle: short
+      hour12: true
+
+- greeting:
+    text_size: xl
+    text: "Welcome to your Dashboard"
+
